@@ -15,25 +15,29 @@ export default async function MentionsLegalesPage() {
 
       <h2>Éditeur du site</h2>
       <p>
-        ReStyle Studio SARL
+        ReStyle Studio SARL — société en cours d&apos;immatriculation
         <br />
         Forme juridique : SARL
         <br />
-        Capital social : [À COMPLÉTER]
+        Capital social : 5 000 €
         <br />
-        Siège social : [ADRESSE DU SIÈGE À COMPLÉTER]
+        Siège social : 6 Domaine des Coteaux, 57925 Distroff
         <br />
-        RCS : [NUMÉRO RCS À COMPLÉTER]
+        RCS : en cours d&apos;immatriculation
         <br />
-        SIRET : [NUMÉRO SIRET À COMPLÉTER]
+        SIRET : en cours d&apos;attribution
         <br />
-        TVA intracommunautaire : [NUMÉRO TVA À COMPLÉTER]
+        TVA intracommunautaire : en cours d&apos;attribution
         <br />
-        Directeur de la publication : René D&apos;aversi, Directeur Commercial
+        Directeur de la publication : Hugo D&apos;aversi, Gérant
         <br />
         Téléphone : {settings?.telephone || '+33 7 85 96 53 47'}
         <br />
         Email : {settings?.email || 'ReStyleStudioCover@gmail.com'}
+      </p>
+      <p className="text-sm text-brand-cream/60">
+        La société ReStyle Studio étant en cours de constitution, les numéros RCS, SIRET et de TVA
+        intracommunautaire seront complétés dès leur attribution.
       </p>
 
       <h2>Hébergement</h2>
