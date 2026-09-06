@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { InstagramGlyph, FacebookGlyph, TiktokGlyph } from '@/components/ui/SocialIcons';
 import type { SiteSettings } from '@/lib/types';
 
 export function Footer({ settings }: { settings: SiteSettings | null }) {
@@ -15,19 +16,37 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
             {settings?.telephone || '+33 7 85 96 53 47'}
           </a>
         </p>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap justify-center gap-3">
           {settings?.instagram_url && (
-            <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" className="hover:text-brand-cream">
+            <a
+              href={settings.instagram_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-brand-cream transition-colors hover:border-brand-pink/60"
+            >
+              <InstagramGlyph className="h-4 w-4" />
               Instagram
             </a>
           )}
           {settings?.facebook_url && (
-            <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" className="hover:text-brand-cream">
+            <a
+              href={settings.facebook_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-brand-cream transition-colors hover:border-brand-pink/60"
+            >
+              <FacebookGlyph className="h-4 w-4" />
               Facebook
             </a>
           )}
           {settings?.tiktok_url && (
-            <a href={settings.tiktok_url} target="_blank" rel="noopener noreferrer" className="hover:text-brand-cream">
+            <a
+              href={settings.tiktok_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-brand-cream transition-colors hover:border-brand-pink/60"
+            >
+              <TiktokGlyph className="h-4 w-4" />
               TikTok
             </a>
           )}

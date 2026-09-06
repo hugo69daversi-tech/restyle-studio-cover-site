@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Logo } from '@/components/ui/Logo';
 import { Icon } from '@/components/ui/Icon';
 import type { SiteSettings } from '@/lib/types';
@@ -12,12 +13,7 @@ export function Header({ settings }: { settings: SiteSettings | null }) {
         <div className="flex items-center gap-3">
           <Logo size={40} />
           <div className="leading-tight">
-            <p className="text-sm font-bold tracking-wide">
-              Re<span className="text-gradient">Style</span>{' '}
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-cream/70">
-                Studio
-              </span>
-            </p>
+            <Image src="/logo-wordmark.png" alt="ReStyle Studio" width={121} height={38} className="h-8 w-auto" />
             {compteurActif ? (
               <p className="text-[11px] font-semibold text-gradient">
                 +{settings!.compteur_valeur} chantiers réalisés
