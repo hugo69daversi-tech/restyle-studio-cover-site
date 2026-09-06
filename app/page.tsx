@@ -5,6 +5,7 @@ import { LigneActu } from '@/components/sections/LigneActu';
 import { Prestations } from '@/components/sections/Prestations';
 import { AvantApresPhotos } from '@/components/sections/AvantApresSlider';
 import { AvantApresVideos } from '@/components/sections/AvantApresVideos';
+import { CompteurRealisations } from '@/components/sections/CompteurRealisations';
 import { AvisGoogle } from '@/components/sections/AvisGoogle';
 import { ZoneIntervention } from '@/components/sections/ZoneIntervention';
 import { FAQ } from '@/components/sections/FAQ';
@@ -27,6 +28,7 @@ export default async function HomePage() {
         <Prestations prestations={prestations} />
         <AvantApresPhotos photos={photos} />
         <AvantApresVideos videos={videos} />
+        <CompteurRealisations settings={settings} />
         <AvisGoogle settings={settings} />
         <ZoneIntervention settings={settings} />
         <FAQ items={faqItems} />

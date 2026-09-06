@@ -1,4 +1,5 @@
 import { Icon } from '@/components/ui/Icon';
+import { GarantieBadge } from '@/components/ui/GarantieBadge';
 import type { Prestation } from '@/lib/types';
 
 const DEFAULTS: Prestation[] = [
@@ -58,6 +59,10 @@ export function Prestations({ prestations }: { prestations: Prestation[] }) {
             <p className="mt-2 text-sm text-brand-cream/70">{item.description}</p>
           </div>
         ))}
+      </div>
+
+      <div className="mt-10 flex justify-center">
+        <GarantieBadge />
       </div>
     </section>
   );

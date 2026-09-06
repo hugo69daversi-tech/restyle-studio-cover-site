@@ -1,3 +1,4 @@
+import { GarantieBadge } from '@/components/ui/GarantieBadge';
 import type { HeroContent } from '@/lib/types';
 
 export function Hero({ hero }: { hero: HeroContent | null }) {
@@ -34,6 +35,10 @@ export function Hero({ hero }: { hero: HeroContent | null }) {
         <a href="#prestations" className="btn-secondary">
           Découvrir nos prestations
         </a>
+      </div>
+
+      <div className="mt-8">
+        <GarantieBadge compact />
       </div>
     </section>
   );

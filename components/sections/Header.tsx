@@ -5,7 +5,6 @@ import type { SiteSettings } from '@/lib/types';
 
 export function Header({ settings }: { settings: SiteSettings | null }) {
   const phone = settings?.telephone || '+33 7 85 96 53 47';
-  const compteurActif = settings?.compteur_actif && settings.compteur_valeur > 0;
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-brand-bg/80 backdrop-blur-md">
@@ -14,15 +13,9 @@ export function Header({ settings }: { settings: SiteSettings | null }) {
           <Logo size={40} />
           <div className="leading-tight">
             <Image src="/logo-wordmark.png" alt="ReStyle Studio" width={121} height={38} className="h-8 w-auto" />
-            {compteurActif ? (
-              <p className="text-[11px] font-semibold text-gradient">
-                +{settings!.compteur_valeur} chantiers réalisés
-              </p>
-            ) : (
-              <p className="text-[11px] uppercase tracking-widest text-brand-cream/50">
-                Covering &amp; rénovation
-              </p>
-            )}
+            <p className="text-[11px] uppercase tracking-widest text-brand-cream/50">
+              Covering &amp; rénovation
+            </p>
           </div>
         </div>
         <a
