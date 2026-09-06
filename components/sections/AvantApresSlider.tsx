@@ -39,10 +39,7 @@ function SingleSlider({ item }: { item: RealisationPhoto }) {
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover"
         />
-        <div
-          className="absolute inset-0 overflow-hidden"
-          style={{ width: `${position}%` }}
-        >
+        <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
           <Image
             src={item.photo_avant_url}
             alt={item.texte_alt || `${item.titre} - avant`}
