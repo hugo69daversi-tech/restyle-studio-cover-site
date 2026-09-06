@@ -1,14 +1,23 @@
 import { createSupabaseAdminClient } from '@/lib/supabase/server';
 import { updateSiteSettings } from '@/lib/actions/admin';
+import { BackToDashboard } from '@/components/admin/BackToDashboard';
+import { SavedBanner } from '@/components/admin/SavedBanner';
 import type { SiteSettings } from '@/lib/types';
 
-export default async function AdminParametresPage() {
+export default async function AdminParametresPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ ok?: string }>;
+}) {
   const admin = createSupabaseAdminClient();
   const { data } = await admin.from('site_settings').select('*').eq('id', 1).single();
   const settings = data as SiteSettings | null;
+  const { ok } = await searchParams;
 
   return (
     <div className="max-w-2xl">
+      <BackToDashboard />
+      <SavedBanner show={ok === '1'} />
       <h1 className="text-2xl font-bold">Paramètres</h1>
       <p className="mt-2 text-sm text-brand-cream/60">Coordonnées et informations générales.</p>
 

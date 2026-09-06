@@ -1,5 +1,7 @@
 import { createSupabaseAdminClient } from '@/lib/supabase/server';
 import { upsertFaq, deleteFaq } from '@/lib/actions/admin';
+import { BackToDashboard } from '@/components/admin/BackToDashboard';
+import { SavedBanner } from '@/components/admin/SavedBanner';
 import type { FaqItem } from '@/lib/types';
 
 function FaqForm({ item }: { item?: FaqItem }) {
@@ -47,13 +49,20 @@ function FaqForm({ item }: { item?: FaqItem }) {
   );
 }
 
-export default async function AdminFaqPage() {
+export default async function AdminFaqPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ ok?: string }>;
+}) {
   const admin = createSupabaseAdminClient();
   const { data } = await admin.from('faq').select('*').order('ordre');
   const items = (data ?? []) as FaqItem[];
+  const { ok } = await searchParams;
 
   return (
     <div className="max-w-3xl">
+      <BackToDashboard />
+      <SavedBanner show={ok === '1'} />
       <h1 className="text-2xl font-bold">FAQ</h1>
       <p className="mt-2 text-sm text-brand-cream/60">Questions fréquentes affichées sur le site.</p>
 

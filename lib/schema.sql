@@ -125,3 +125,9 @@ values ('media', 'media', true)
 on conflict (id) do nothing;
 
 create policy "lecture publique bucket media" on storage.objects for select using (bucket_id = 'media');
+
+-- Upload direct navigateur -> Storage depuis le back-office (evite de faire
+-- transiter les photos/videos par le serveur Netlify, qui limite la taille des requetes).
+create policy "upload authentifie bucket media" on storage.objects
+  for insert to authenticated
+  with check (bucket_id = 'media');

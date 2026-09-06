@@ -1,14 +1,23 @@
 import { createSupabaseAdminClient } from '@/lib/supabase/server';
 import { updateLigneActu } from '@/lib/actions/admin';
+import { BackToDashboard } from '@/components/admin/BackToDashboard';
+import { SavedBanner } from '@/components/admin/SavedBanner';
 import type { LigneActu } from '@/lib/types';
 
-export default async function AdminActuPage() {
+export default async function AdminActuPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ ok?: string }>;
+}) {
   const admin = createSupabaseAdminClient();
   const { data } = await admin.from('ligne_actu').select('*').eq('id', 1).single();
   const ligneActu = data as LigneActu | null;
+  const { ok } = await searchParams;
 
   return (
     <div className="max-w-2xl">
+      <BackToDashboard />
+      <SavedBanner show={ok === '1'} />
       <h1 className="text-2xl font-bold">Ligne actu</h1>
       <p className="mt-2 text-sm text-brand-cream/60">
         Bandeau affiché en haut du site, à changer selon la saison ou l&apos;actualité.

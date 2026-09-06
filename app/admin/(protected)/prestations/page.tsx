@@ -1,5 +1,7 @@
 import { createSupabaseAdminClient } from '@/lib/supabase/server';
 import { upsertPrestation, deletePrestation } from '@/lib/actions/admin';
+import { BackToDashboard } from '@/components/admin/BackToDashboard';
+import { SavedBanner } from '@/components/admin/SavedBanner';
 import type { Prestation } from '@/lib/types';
 
 const ICONES = ['sparkles', 'hammer', 'shield', 'palette'];
@@ -65,13 +67,20 @@ function PrestationForm({ item }: { item?: Prestation }) {
   );
 }
 
-export default async function AdminPrestationsPage() {
+export default async function AdminPrestationsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ ok?: string }>;
+}) {
   const admin = createSupabaseAdminClient();
   const { data } = await admin.from('prestations').select('*').order('ordre');
   const prestations = (data ?? []) as Prestation[];
+  const { ok } = await searchParams;
 
   return (
     <div className="max-w-3xl">
+      <BackToDashboard />
+      <SavedBanner show={ok === '1'} />
       <h1 className="text-2xl font-bold">Prestations</h1>
       <p className="mt-2 text-sm text-brand-cream/60">Les 4 piliers de la marque.</p>
 

@@ -1,14 +1,23 @@
 import { createSupabaseAdminClient } from '@/lib/supabase/server';
 import { updateHero } from '@/lib/actions/admin';
+import { BackToDashboard } from '@/components/admin/BackToDashboard';
+import { SavedBanner } from '@/components/admin/SavedBanner';
 import type { HeroContent } from '@/lib/types';
 
-export default async function AdminContenuPage() {
+export default async function AdminContenuPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ ok?: string }>;
+}) {
   const admin = createSupabaseAdminClient();
   const { data } = await admin.from('hero_content').select('*').eq('id', 1).single();
   const hero = data as HeroContent | null;
+  const { ok } = await searchParams;
 
   return (
     <div className="max-w-2xl">
+      <BackToDashboard />
+      <SavedBanner show={ok === '1'} />
       <h1 className="text-2xl font-bold">Qui sommes-nous</h1>
       <p className="mt-2 text-sm text-brand-cream/60">
         Texte de présentation affiché en haut de la page publique.

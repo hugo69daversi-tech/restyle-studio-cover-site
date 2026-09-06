@@ -2,7 +2,6 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { randomUUID } from 'crypto';
 import { createSupabaseServerClient, createSupabaseAdminClient } from '@/lib/supabase/server';
 
 async function requireSession() {
@@ -41,6 +40,7 @@ export async function updateHero(formData: FormData) {
     })
     .eq('id', 1);
   revalidateAll('/admin/contenu');
+  redirect('/admin/contenu?ok=1');
 }
 
 // --- Ligne actu ---
@@ -56,6 +56,7 @@ export async function updateLigneActu(formData: FormData) {
     })
     .eq('id', 1);
   revalidateAll('/admin/actu');
+  redirect('/admin/actu?ok=1');
 }
 
 // --- Site settings ---
@@ -76,6 +77,7 @@ export async function updateSiteSettings(formData: FormData) {
     })
     .eq('id', 1);
   revalidateAll('/admin/parametres');
+  redirect('/admin/parametres?ok=1');
 }
 
 export async function updateAvisConfig(formData: FormData) {
@@ -90,6 +92,7 @@ export async function updateAvisConfig(formData: FormData) {
     })
     .eq('id', 1);
   revalidateAll('/admin/avis');
+  redirect('/admin/avis?ok=1');
 }
 
 export async function updateCompteurConfig(formData: FormData) {
@@ -104,26 +107,7 @@ export async function updateCompteurConfig(formData: FormData) {
     })
     .eq('id', 1);
   revalidateAll('/admin/compteur');
-}
-
-// --- Upload media (helper) ---
-async function uploadFileIfPresent(formData: FormData, field: string): Promise<string | null> {
-  const file = formData.get(field);
-  if (!(file instanceof File) || file.size === 0) return null;
-
-  const admin = createSupabaseAdminClient();
-  const ext = file.name.split('.').pop() || 'bin';
-  const path = `${field}/${randomUUID()}.${ext}`;
-  const buffer = Buffer.from(await file.arrayBuffer());
-
-  const { error } = await admin.storage.from('media').upload(path, buffer, {
-    contentType: file.type || undefined,
-    upsert: false,
-  });
-  if (error) throw error;
-
-  const { data } = admin.storage.from('media').getPublicUrl(path);
-  return data.publicUrl;
+  redirect('/admin/compteur?ok=1');
 }
 
 // --- Prestations ---
@@ -146,6 +130,7 @@ export async function upsertPrestation(formData: FormData) {
     await admin.from('prestations').insert(payload);
   }
   revalidateAll('/admin/prestations');
+  redirect('/admin/prestations?ok=1');
 }
 
 export async function deletePrestation(formData: FormData) {
@@ -153,16 +138,20 @@ export async function deletePrestation(formData: FormData) {
   const admin = createSupabaseAdminClient();
   await admin.from('prestations').delete().eq('id', formData.get('id')?.toString());
   revalidateAll('/admin/prestations');
+  redirect('/admin/prestations?ok=1');
 }
 
 // --- Realisations photos ---
+// Les fichiers sont uploades directement du navigateur vers Supabase Storage
+// (pour ne pas etre limites par la taille max des requetes serveur/Netlify) ;
+// cette action ne recoit que les URLs publiques resultantes.
 export async function upsertRealisationPhoto(formData: FormData) {
   await requireSession();
   const admin = createSupabaseAdminClient();
   const id = formData.get('id')?.toString();
 
-  const photoAvantUrl = await uploadFileIfPresent(formData, 'photo_avant');
-  const photoApresUrl = await uploadFileIfPresent(formData, 'photo_apres');
+  const photoAvantUrl = formData.get('photo_avant_url')?.toString();
+  const photoApresUrl = formData.get('photo_apres_url')?.toString();
 
   const payload: Record<string, unknown> = {
     titre: formData.get('titre')?.toString() || '',
@@ -189,16 +178,18 @@ export async function deleteRealisationPhoto(formData: FormData) {
   const admin = createSupabaseAdminClient();
   await admin.from('realisations_photos').delete().eq('id', formData.get('id')?.toString());
   revalidateAll('/admin/realisations-photos');
+  redirect('/admin/realisations-photos?ok=1');
 }
 
 // --- Realisations videos ---
+// Meme principe que les photos : la video est uploadee cote navigateur, cette
+// action ne recoit que l'URL finale (upload direct ou lien externe colle).
 export async function upsertRealisationVideo(formData: FormData) {
   await requireSession();
   const admin = createSupabaseAdminClient();
   const id = formData.get('id')?.toString();
 
-  const videoUrl = await uploadFileIfPresent(formData, 'video');
-  const externalUrl = formData.get('video_url_externe')?.toString();
+  const videoUrl = formData.get('video_url')?.toString();
 
   const payload: Record<string, unknown> = {
     titre: formData.get('titre')?.toString() || '',
@@ -207,7 +198,6 @@ export async function upsertRealisationVideo(formData: FormData) {
     publie: formData.get('publie') === 'on',
   };
   if (videoUrl) payload.video_url = videoUrl;
-  else if (externalUrl) payload.video_url = externalUrl;
 
   if (id) {
     await admin.from('realisations_videos').update(payload).eq('id', id);
@@ -225,6 +215,7 @@ export async function deleteRealisationVideo(formData: FormData) {
   const admin = createSupabaseAdminClient();
   await admin.from('realisations_videos').delete().eq('id', formData.get('id')?.toString());
   revalidateAll('/admin/realisations-videos');
+  redirect('/admin/realisations-videos?ok=1');
 }
 
 // --- FAQ ---
@@ -246,6 +237,7 @@ export async function upsertFaq(formData: FormData) {
     await admin.from('faq').insert(payload);
   }
   revalidateAll('/admin/faq');
+  redirect('/admin/faq?ok=1');
 }
 
 export async function deleteFaq(formData: FormData) {
@@ -253,4 +245,5 @@ export async function deleteFaq(formData: FormData) {
   const admin = createSupabaseAdminClient();
   await admin.from('faq').delete().eq('id', formData.get('id')?.toString());
   revalidateAll('/admin/faq');
+  redirect('/admin/faq?ok=1');
 }
