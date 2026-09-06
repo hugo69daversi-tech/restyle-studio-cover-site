@@ -53,7 +53,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     email: settings?.email || 'ReStyleStudioCover@gmail.com',
     areaServed: ['Moselle', 'Luxembourg', 'Metz', 'Thionville'],
     url: siteUrl,
-    sameAs: [settings?.instagram_url, settings?.facebook_url].filter(Boolean),
+    sameAs: [settings?.instagram_url, settings?.facebook_url, settings?.tiktok_url].filter(Boolean),
   };
 
   return (

@@ -26,6 +26,11 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
               Facebook
             </a>
           )}
+          {settings?.tiktok_url && (
+            <a href={settings.tiktok_url} target="_blank" rel="noopener noreferrer" className="hover:text-brand-cream">
+              TikTok
+            </a>
+          )}
         </div>
         <div className="flex gap-4">
           <Link href="/mentions-legales" className="hover:text-brand-cream">

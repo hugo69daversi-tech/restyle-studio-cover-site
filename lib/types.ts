@@ -7,6 +7,7 @@ export interface SiteSettings {
   horaires: string;
   instagram_url: string | null;
   facebook_url: string | null;
+  tiktok_url: string | null;
   avis_google_actif: boolean;
   avis_google_lien: string | null;
   compteur_actif: boolean;

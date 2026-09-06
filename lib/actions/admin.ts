@@ -73,6 +73,7 @@ export async function updateSiteSettings(formData: FormData) {
       horaires: formData.get('horaires')?.toString() || '',
       instagram_url: formData.get('instagram_url')?.toString() || '',
       facebook_url: formData.get('facebook_url')?.toString() || '',
+      tiktok_url: formData.get('tiktok_url')?.toString() || '',
       updated_at: new Date().toISOString(),
     })
     .eq('id', 1);
