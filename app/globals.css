@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-brand-marble bg-brand-bg text-brand-cream;
+  background-attachment: fixed;
+}
+
+.text-gradient {
+  @apply bg-brand-gradient bg-clip-text text-transparent;
+}
+
+.section-container {
+  @apply mx-auto w-full max-w-6xl px-6 py-20 md:py-28;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full bg-brand-gradient px-8 py-3.5 font-semibold text-brand-bg shadow-lg shadow-brand-pink/20 transition-transform hover:scale-[1.03] active:scale-[0.98];
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-full border border-brand-cream/30 px-8 py-3.5 font-semibold text-brand-cream transition-colors hover:border-brand-cream/70 hover:bg-white/5;
+}
+
+.card {
+  @apply rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm;
+}
