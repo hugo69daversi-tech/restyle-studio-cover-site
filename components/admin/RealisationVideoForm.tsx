@@ -74,7 +74,9 @@ export function RealisationVideoForm({ item }: { item?: RealisationVideo }) {
         />
       </div>
       {item && (
-        <VideoPlayer url={item.video_url} title={item.titre} className="aspect-video w-full rounded-lg bg-black" />
+        <div className="max-w-[220px]">
+          <VideoPlayer url={item.video_url} title={item.titre} className="aspect-[9/16] w-full rounded-lg bg-black" />
+        </div>
       )}
       <div className="grid gap-3 sm:grid-cols-2">
         <div>

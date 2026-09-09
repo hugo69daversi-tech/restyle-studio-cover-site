@@ -11,8 +11,12 @@ export function AvantApresVideos({ videos }: { videos: RealisationVideo[] }) {
       </h2>
       <div className="mt-12 flex gap-6 overflow-x-auto pb-4">
         {videos.map((video) => (
-          <div key={video.id} className="card w-80 shrink-0 p-0 overflow-hidden">
-            <VideoPlayer url={video.video_url} title={video.texte_alt || video.titre} />
+          <div key={video.id} className="card w-56 shrink-0 p-0 overflow-hidden">
+            <VideoPlayer
+              url={video.video_url}
+              title={video.texte_alt || video.titre}
+              className="aspect-[9/16] w-full bg-black"
+            />
             <div className="p-4">
               <h3 className="font-semibold">{video.titre}</h3>
             </div>
