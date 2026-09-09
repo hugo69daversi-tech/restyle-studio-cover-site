@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient, createSupabaseAdminClient } from '@/lib/supabase/server';
+import { nextSlotAfter } from '@/lib/blogSchedule';
 
 async function requireSession() {
   const supabase = await createSupabaseServerClient();
@@ -21,10 +22,30 @@ function revalidateAll() {
   revalidatePath('/sitemap.xml');
 }
 
+/**
+ * Approuver un article ne le rend pas visible immediatement : il est mis en
+ * file d'attente sur le prochain creneau lundi/mercredi/vendredi disponible
+ * (apres le dernier article deja programme), pour respecter le rythme de
+ * publication voulu sans avoir a publier manuellement chaque jour.
+ */
 export async function publishArticle(formData: FormData) {
   await requireSession();
   const admin = createSupabaseAdminClient();
   const id = formData.get('id')?.toString();
+
+  const { data: lastScheduled } = await admin
+    .from('blog_articles')
+    .select('published_at')
+    .eq('statut', 'publie')
+    .order('published_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const now = new Date();
+  const base = lastScheduled?.published_at && new Date(lastScheduled.published_at) > now
+    ? new Date(lastScheduled.published_at)
+    : now;
+  const scheduledFor = nextSlotAfter(base);
 
   await admin
     .from('blog_articles')
@@ -33,7 +54,7 @@ export async function publishArticle(formData: FormData) {
       extrait: formData.get('extrait')?.toString() || '',
       contenu: formData.get('contenu')?.toString() || '',
       statut: 'publie',
-      published_at: new Date().toISOString(),
+      published_at: scheduledFor.toISOString(),
     })
     .eq('id', id);
 

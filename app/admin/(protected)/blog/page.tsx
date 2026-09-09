@@ -102,29 +102,48 @@ export default async function AdminBlogPage({
         ))}
       </div>
 
-      <h2 className="mt-10 text-lg font-semibold">Publiés ({publies.length})</h2>
+      <h2 className="mt-10 text-lg font-semibold">Approuvés / file d&apos;attente ({publies.length})</h2>
+      <p className="mt-1 text-xs text-brand-cream/50">
+        Chaque article approuvé se place automatiquement sur le prochain créneau lundi/mercredi/vendredi
+        disponible.
+      </p>
       <div className="mt-4 space-y-2">
-        {publies.map((item) => (
-          <div key={item.id} className="card flex items-center justify-between gap-4">
-            <div>
-              <a
-                href={`/blog/${item.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold hover:text-brand-pink"
-              >
-                {item.titre}
-              </a>
-              <p className="text-xs text-brand-cream/50">/blog/{item.slug}</p>
+        {publies.map((item) => {
+          const isLive = item.published_at && new Date(item.published_at) <= new Date();
+          return (
+            <div key={item.id} className="card flex items-center justify-between gap-4">
+              <div>
+                {isLive ? (
+                  <a
+                    href={`/blog/${item.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold hover:text-brand-pink"
+                  >
+                    {item.titre}
+                  </a>
+                ) : (
+                  <p className="font-semibold">{item.titre}</p>
+                )}
+                <p className="text-xs text-brand-cream/50">
+                  {isLive
+                    ? `En ligne depuis le ${new Date(item.published_at!).toLocaleDateString('fr-FR')}`
+                    : `Prévu le ${new Date(item.published_at!).toLocaleDateString('fr-FR', {
+                        weekday: 'long',
+                        day: 'numeric',
+                        month: 'long',
+                      })}`}
+                </p>
+              </div>
+              <form action={unpublishArticle}>
+                <input type="hidden" name="id" value={item.id} />
+                <button type="submit" className="shrink-0 text-xs text-brand-cream/60 hover:underline">
+                  {isLive ? 'Dépublier' : 'Annuler'}
+                </button>
+              </form>
             </div>
-            <form action={unpublishArticle}>
-              <input type="hidden" name="id" value={item.id} />
-              <button type="submit" className="shrink-0 text-xs text-brand-cream/60 hover:underline">
-                Dépublier
-              </button>
-            </form>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
