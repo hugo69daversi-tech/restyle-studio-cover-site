@@ -4,6 +4,7 @@ import { useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { uploadMediaFile } from '@/lib/uploadMedia';
 import { upsertRealisationVideo } from '@/lib/actions/admin';
+import { VideoPlayer } from '@/components/ui/VideoPlayer';
 import type { RealisationVideo } from '@/lib/types';
 
 type Status = 'idle' | 'saving' | 'success' | 'error';
@@ -72,17 +73,19 @@ export function RealisationVideoForm({ item }: { item?: RealisationVideo }) {
           className="w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2"
         />
       </div>
-      {item && <video src={item.video_url} controls className="aspect-video w-full rounded-lg bg-black" />}
+      {item && (
+        <VideoPlayer url={item.video_url} title={item.titre} className="aspect-video w-full rounded-lg bg-black" />
+      )}
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
           <label className="mb-1 block text-sm font-medium">Fichier vidéo (upload)</label>
           <input type="file" name="video" accept="video/*" className="w-full text-sm" />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium">Ou lien vidéo externe (YouTube, etc.)</label>
+          <label className="mb-1 block text-sm font-medium">Ou lien YouTube / Vimeo</label>
           <input
             name="video_url_externe"
-            placeholder="https://..."
+            placeholder="https://www.youtube.com/watch?v=..."
             className="w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2"
           />
         </div>
