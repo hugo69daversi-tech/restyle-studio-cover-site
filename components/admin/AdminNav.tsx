@@ -9,6 +9,7 @@ const links = [
   { href: '/admin/realisations-photos', label: 'Réalisations photos' },
   { href: '/admin/realisations-videos', label: 'Réalisations vidéos' },
   { href: '/admin/faq', label: 'FAQ' },
+  { href: '/admin/blog', label: 'Blog (validation)' },
   { href: '/admin/avis', label: 'Avis Google' },
   { href: '/admin/compteur', label: 'Compteur' },
   { href: '/admin/parametres', label: 'Paramètres' },

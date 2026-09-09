@@ -88,6 +88,19 @@ create table if not exists faq (
   created_at timestamptz not null default now()
 );
 
+-- Articles de blog SEO/GEO : generes en brouillon, publies seulement apres validation manuelle
+create table if not exists blog_articles (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  titre text not null,
+  extrait text not null,
+  contenu text not null,
+  mot_cle_cible text default '',
+  statut text not null default 'brouillon' check (statut in ('brouillon', 'publie', 'rejete')),
+  created_at timestamptz not null default now(),
+  published_at timestamptz
+);
+
 -- Sauvegarde optionnelle des demandes de contact (en plus de l'email envoye aux commerciaux)
 create table if not exists contacts (
   id uuid primary key default gen_random_uuid(),
@@ -109,6 +122,7 @@ alter table prestations enable row level security;
 alter table realisations_photos enable row level security;
 alter table realisations_videos enable row level security;
 alter table faq enable row level security;
+alter table blog_articles enable row level security;
 alter table contacts enable row level security;
 
 create policy "lecture publique site_settings" on site_settings for select using (true);
@@ -118,6 +132,7 @@ create policy "lecture publique prestations" on prestations for select using (pu
 create policy "lecture publique realisations_photos" on realisations_photos for select using (publie = true);
 create policy "lecture publique realisations_videos" on realisations_videos for select using (publie = true);
 create policy "lecture publique faq" on faq for select using (publie = true);
+create policy "lecture publique blog_articles" on blog_articles for select using (statut = 'publie');
 -- Pas de policy select/insert sur "contacts" pour le role anon : uniquement accessible via la cle service_role cote serveur.
 
 -- Storage : bucket public pour les images/videos des realisations

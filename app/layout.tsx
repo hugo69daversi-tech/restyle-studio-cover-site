@@ -5,7 +5,7 @@ import { getPublicContent } from '@/lib/content';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.restylestudiocover.fr';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.restylestudiocover.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

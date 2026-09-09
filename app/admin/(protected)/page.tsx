@@ -7,6 +7,7 @@ const cards = [
   { href: '/admin/realisations-photos', title: 'Réalisations photos', desc: 'Avant/après avec slider.' },
   { href: '/admin/realisations-videos', title: 'Réalisations vidéos', desc: 'Vidéos avant/après.' },
   { href: '/admin/faq', title: 'FAQ', desc: 'Questions fréquentes affichées sur le site.' },
+  { href: '/admin/blog', title: 'Blog (validation)', desc: 'Relire et publier les articles générés.' },
   { href: '/admin/avis', title: 'Avis Google', desc: 'Activer/désactiver le module.' },
   { href: '/admin/compteur', title: 'Compteur de réalisations', desc: 'Activer et fixer le chiffre affiché.' },
   { href: '/admin/parametres', title: 'Paramètres', desc: 'Coordonnées, horaires, zone, réseaux sociaux.' },

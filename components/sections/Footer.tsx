@@ -51,7 +51,10 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
             </a>
           )}
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap justify-center gap-4">
+          <Link href="/blog" className="hover:text-brand-cream">
+            Blog
+          </Link>
           <Link href="/mentions-legales" className="hover:text-brand-cream">
             Mentions légales
           </Link>

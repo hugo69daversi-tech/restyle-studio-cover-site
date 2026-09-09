@@ -62,3 +62,17 @@ export interface FaqItem {
   ordre: number;
   publie: boolean;
 }
+
+export type BlogStatut = 'brouillon' | 'publie' | 'rejete';
+
+export interface BlogArticle {
+  id: string;
+  slug: string;
+  titre: string;
+  extrait: string;
+  contenu: string;
+  mot_cle_cible: string;
+  statut: BlogStatut;
+  created_at: string;
+  published_at: string | null;
+}
