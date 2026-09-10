@@ -12,7 +12,7 @@ export function FinalCTA({ settings }: { settings: SiteSettings | null }) {
   return (
     <section id="contact" className="section-container text-center">
       <h2 className="text-3xl font-bold md:text-4xl">
-        Passons à <span className="text-gradient">l&apos;action</span>
+        Prêt à <span className="text-gradient">transformer votre intérieur</span> ?
       </h2>
       <p className="mx-auto mt-4 max-w-xl text-brand-cream/70">
         Laissez-nous vos coordonnées pour être rappelé, ou appelez-nous directement.
