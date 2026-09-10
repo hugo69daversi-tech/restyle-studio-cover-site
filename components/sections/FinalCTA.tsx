@@ -17,6 +17,9 @@ export function FinalCTA({ settings }: { settings: SiteSettings | null }) {
       <p className="mx-auto mt-4 max-w-xl text-brand-cream/70">
         Laissez-nous vos coordonnées pour être rappelé, ou appelez-nous directement.
       </p>
+      <p className="mx-auto mt-2 max-w-xl text-sm text-brand-cream/50">
+        Nous vous rappelons généralement sous 48h.
+      </p>
 
       <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
         <button type="button" onClick={() => setShowForm(true)} className="btn-primary">
