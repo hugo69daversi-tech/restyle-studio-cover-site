@@ -3,7 +3,7 @@ import { getPublicContent } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Politique de confidentialité',
-  description: "Politique de confidentialité et RGPD de ReStyle Studio Cover.",
+  description: "Politique de confidentialité et RGPD de ReStyle Studio.",
 };
 
 export default async function ConfidentialitePage() {

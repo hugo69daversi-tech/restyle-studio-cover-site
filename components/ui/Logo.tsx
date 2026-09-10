@@ -4,7 +4,7 @@ export function Logo({ size = 48 }: { size?: number }) {
   return (
     <Image
       src="/logo-badge.png"
-      alt="ReStyle Studio Cover"
+      alt="ReStyle Studio"
       width={size}
       height={size}
       className="rounded-full"

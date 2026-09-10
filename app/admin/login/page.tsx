@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
           <Logo size={48} />
           <h1 className="text-lg font-semibold">Espace admin</h1>
           <p className="text-center text-xs text-brand-cream/60">
-            ReStyle Studio Cover — accès réservé
+            ReStyle Studio — accès réservé
           </p>
         </div>
 

@@ -40,7 +40,7 @@ export function ContactForm() {
       <div className="card text-center">
         <p className="text-lg font-semibold text-gradient">Merci pour votre demande !</p>
         <p className="mt-2 text-sm text-brand-cream/70">
-          Un commercial ReStyle Studio Cover vous recontacte au créneau choisi.
+          Un commercial ReStyle Studio vous recontacte au créneau choisi.
         </p>
       </div>
     );

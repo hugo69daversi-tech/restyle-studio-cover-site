@@ -29,8 +29,9 @@ export function CookieBanner() {
     <div className="fixed inset-x-0 bottom-0 z-[60] border-t border-white/10 bg-brand-bg2/95 p-4 backdrop-blur-md">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
         <p className="text-sm text-brand-cream/80">
-          Nous utilisons des cookies pour mesurer l&apos;audience du site. Vous pouvez accepter ou refuser
-          les cookies non essentiels.{' '}
+          Ce site n&apos;utilise que des cookies techniques nécessaires à son fonctionnement. Nous
+          pourrons utiliser des cookies de mesure d&apos;audience à l&apos;avenir, uniquement avec
+          votre consentement.{' '}
           <a href="/confidentialite" className="underline">
             En savoir plus
           </a>

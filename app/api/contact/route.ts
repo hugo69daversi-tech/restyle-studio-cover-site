@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { sendContactEmail } from '@/lib/email';
+import { sendContactEmail, sendClientConfirmationEmail } from '@/lib/email';
 import { createSupabaseAdminClient } from '@/lib/supabase/server';
 
 const schema = z.object({
@@ -35,6 +35,12 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Erreur d'envoi email contact:", error);
     return NextResponse.json({ error: "Erreur lors de l'envoi de votre demande" }, { status: 500 });
+  }
+
+  try {
+    await sendClientConfirmationEmail({ nom, adresse, telephone, email, creneau, message });
+  } catch (error) {
+    console.error('Erreur envoi email de confirmation client (non bloquant):', error);
   }
 
   try {

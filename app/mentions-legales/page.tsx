@@ -3,7 +3,7 @@ import { getPublicContent } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Mentions légales',
-  description: 'Mentions légales de ReStyle Studio Cover.',
+  description: 'Mentions légales de ReStyle Studio.',
 };
 
 export default async function MentionsLegalesPage() {

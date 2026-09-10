@@ -2,11 +2,11 @@ import { GarantieBadge } from '@/components/ui/GarantieBadge';
 import type { HeroContent } from '@/lib/types';
 
 export function Hero({ hero }: { hero: HeroContent | null }) {
-  const titre = hero?.titre || 'ReStyle Studio Cover';
+  const titre = hero?.titre || 'ReStyle Studio';
   const devise = hero?.devise || 'PRECISION. INNOVATION. TRANSFORMATION.';
   const texte =
     hero?.texte ||
-    "ReStyle Studio Cover transforme vos cuisines, meubles, salles de bain et intérieurs grâce au covering architectural haut de gamme — sans les travaux ni le budget d'une rénovation classique.";
+    "ReStyle Studio transforme vos cuisines, meubles, salles de bain et intérieurs grâce au covering architectural haut de gamme — sans les travaux ni le budget d'une rénovation classique.";
   const motsDevise = devise.replace(/\.$/, '').split('. ').filter(Boolean);
 
   return (
@@ -28,10 +28,7 @@ export function Hero({ hero }: { hero: HeroContent | null }) {
         ))}
       </div>
 
-      <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-        <a href="#contact" className="btn-primary">
-          Demander votre étude gratuite
-        </a>
+      <div className="mt-10">
         <a href="#prestations" className="btn-secondary">
           Découvrir nos prestations
         </a>

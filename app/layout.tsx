@@ -10,8 +10,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.restylestudioco
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'ReStyle Studio Cover — Covering & rénovation intérieure en Moselle & Luxembourg',
-    template: '%s | ReStyle Studio Cover',
+    default: 'ReStyle Studio — Covering & rénovation intérieure en Moselle & Luxembourg',
+    template: '%s | ReStyle Studio',
   },
   description:
     "Covering architectural d'intérieur : cuisines, meubles, salles de bain, murs, et film vitrage bâtiment. Rénovation sur-mesure, sans travaux lourds, en Moselle et au Luxembourg.",
@@ -26,11 +26,11 @@ export const metadata: Metadata = {
     'covering Luxembourg',
   ],
   openGraph: {
-    title: 'ReStyle Studio Cover — Covering & rénovation intérieure',
+    title: 'ReStyle Studio — Covering & rénovation intérieure',
     description:
       'Transformez vos cuisines, meubles et intérieurs sans travaux lourds. Devis gratuit en Moselle & Luxembourg.',
     url: siteUrl,
-    siteName: 'ReStyle Studio Cover',
+    siteName: 'ReStyle Studio',
     locale: 'fr_FR',
     type: 'website',
   },
@@ -46,7 +46,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: 'ReStyle Studio SARL',
-    alternateName: 'ReStyle Studio Cover',
+    alternateName: 'ReStyle Studio',
     description:
       "Covering architectural d'intérieur (cuisines, meubles, salles de bain, murs) et film vitrage bâtiment.",
     telephone: settings?.telephone || '+33 7 85 96 53 47',

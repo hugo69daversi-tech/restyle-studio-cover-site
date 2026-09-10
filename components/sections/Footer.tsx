@@ -7,7 +7,7 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
     <footer className="border-t border-white/10 py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center text-sm text-brand-cream/60">
         <p>
-          ReStyle Studio Cover — {settings?.zone_intervention || 'Moselle & Luxembourg'} —{' '}
+          ReStyle Studio — {settings?.zone_intervention || 'Moselle & Luxembourg'} —{' '}
           <a href={`mailto:${settings?.email || 'ReStyleStudioCover@gmail.com'}`} className="hover:text-brand-cream">
             {settings?.email || 'ReStyleStudioCover@gmail.com'}
           </a>{' '}
