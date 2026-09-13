@@ -47,7 +47,8 @@ export function Prestations({ prestations }: { prestations: Prestation[] }) {
       </h2>
       <p className="mx-auto mt-4 max-w-2xl text-center text-brand-cream/70">
         Du covering de meuble sur-mesure au film solaire pour vitrage professionnel, une gamme
-        complète pour transformer votre intérieur sans travaux lourds.
+        complète pour transformer votre intérieur sans travaux lourds, sans poussière ni
+        démolition.
       </p>
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((item) => (
