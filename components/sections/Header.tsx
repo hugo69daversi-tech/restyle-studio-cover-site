@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Logo } from '@/components/ui/Logo';
 import { Icon } from '@/components/ui/Icon';
 import type { SiteSettings } from '@/lib/types';
@@ -18,13 +19,21 @@ export function Header({ settings }: { settings: SiteSettings | null }) {
             </p>
           </div>
         </div>
-        <a
-          href={`tel:${phone.replace(/\s/g, '')}`}
-          className="hidden items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-brand-cream transition-colors hover:border-brand-pink/60 sm:flex"
-        >
-          <Icon name="phone" className="h-4 w-4" />
-          {phone}
-        </a>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link
+            href="/blog"
+            className="rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-brand-cream transition-colors hover:border-brand-pink/60"
+          >
+            Blog
+          </Link>
+          <a
+            href={`tel:${phone.replace(/\s/g, '')}`}
+            className="hidden items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-brand-cream transition-colors hover:border-brand-pink/60 sm:flex"
+          >
+            <Icon name="phone" className="h-4 w-4" />
+            {phone}
+          </a>
+        </div>
       </div>
     </header>
   );
