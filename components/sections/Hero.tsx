@@ -14,7 +14,7 @@ function HeroVisual({ photo }: { photo?: RealisationPhoto }) {
   if (!photo) {
     return (
       <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03]">
-        <Image src="/logo-badge.png" alt="ReStyle Studio" width={320} height={320} className="w-3/5 rounded-full" priority />
+        <Image src="/logo-badge.webp" alt="ReStyle Studio" width={340} height={340} className="w-3/5" priority />
       </div>
     );
   }

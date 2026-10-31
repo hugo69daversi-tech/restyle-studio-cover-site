@@ -1,14 +1,14 @@
 import Image from 'next/image';
 
 /**
- * Les fichiers du logo ont encore leur fond brun : le badge est decoupe en
- * cercle et le logotype fondu sur les bords pour se fondre dans le site.
- * A simplifier quand on aura des PNG/SVG a fond transparent.
+ * Le badge (logo-badge.webp) est recadre et centre sur son anneau, fond
+ * transparent. Les logotypes ont encore leur fond brun : ils sont fondus sur
+ * les bords. A simplifier quand on aura des PNG/SVG a fond transparent.
  */
 export function Logo({ size = 48 }: { size?: number }) {
   return (
     <Image
-      src="/logo-badge.png"
+      src="/logo-badge.webp"
       alt="ReStyle Studio"
       width={size}
       height={size}
