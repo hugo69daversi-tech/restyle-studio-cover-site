@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { VideoPlayer } from '@/components/ui/VideoPlayer';
+import { SectionHeading } from '@/components/ui/SectionHeading';
 import { getAutoplayEmbedUrl, getEmbedThumbnail, getVideoEmbedInfo } from '@/lib/videoEmbed';
 import type { RealisationVideo } from '@/lib/types';
 
@@ -10,9 +11,9 @@ const MIN_CARDS_PER_SET = 6;
 const SECONDS_PER_CARD = 7;
 
 /**
- * Carte qui ne charge et ne lit sa video que lorsqu'elle est a l'ecran :
- * le carrousel duplique les videos pour boucler, on evite ainsi de lire
- * une dizaine de videos en meme temps.
+ * Carte video sans texte, qui ne charge et ne lit sa video que lorsqu'elle est
+ * a l'ecran : le carrousel duplique les videos pour boucler, on evite ainsi de
+ * lire une dizaine de videos en meme temps.
  */
 function VideoCard({ video, onOpen }: { video: RealisationVideo; onOpen: () => void }) {
   const ref = useRef<HTMLButtonElement>(null);
@@ -43,41 +44,38 @@ function VideoCard({ video, onOpen }: { video: RealisationVideo; onOpen: () => v
       ref={ref}
       type="button"
       onClick={onOpen}
-      className="card group/card relative w-56 shrink-0 overflow-hidden p-0 text-left md:w-64"
-      aria-label={`Voir la vidéo : ${video.titre}`}
+      className="group/card relative aspect-[9/16] w-52 shrink-0 overflow-hidden rounded-[1.75rem] border border-white/10 bg-black shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] transition-transform duration-500 hover:-translate-y-2 hover:border-brand-pink/50 md:w-64"
+      aria-label={`Voir la vidéo avec le son : ${video.texte_alt || video.titre}`}
     >
-      <div className="relative aspect-[9/16] w-full bg-black">
-        {thumbnail && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={thumbnail} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-        )}
-        {embed
-          ? visible && (
-              <iframe
-                src={getAutoplayEmbedUrl(embed)}
-                title={video.texte_alt || video.titre}
-                allow="autoplay; encrypted-media; picture-in-picture"
-                className="pointer-events-none absolute inset-0 h-full w-full scale-[1.35]"
-                tabIndex={-1}
-              />
-            )
-          : (
-              <video
-                ref={videoRef}
-                src={video.video_url}
-                muted
-                loop
-                playsInline
-                preload={visible ? 'auto' : 'none'}
-                className="absolute inset-0 h-full w-full object-cover"
-                aria-hidden
-              />
-            )}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-4 pt-16">
-          <p className="line-clamp-2 text-sm font-semibold">{video.titre}</p>
-          <p className="mt-1 text-xs text-brand-cream/60 group-hover/card:text-brand-cream">▶ Voir avec le son</p>
-        </div>
-      </div>
+      {thumbnail && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={thumbnail} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+      )}
+      {embed ? (
+        visible && (
+          <iframe
+            src={getAutoplayEmbedUrl(embed)}
+            title={video.texte_alt || video.titre}
+            allow="autoplay; encrypted-media; picture-in-picture"
+            className="pointer-events-none absolute inset-0 h-full w-full scale-[1.35]"
+            tabIndex={-1}
+          />
+        )
+      ) : (
+        <video
+          ref={videoRef}
+          src={video.video_url}
+          muted
+          loop
+          playsInline
+          preload={visible ? 'auto' : 'none'}
+          className="absolute inset-0 h-full w-full object-cover"
+          aria-hidden
+        />
+      )}
+      <span className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-sm opacity-0 backdrop-blur-md transition-opacity group-hover/card:opacity-100">
+        🔊
+      </span>
     </button>
   );
 }
@@ -87,9 +85,14 @@ export function AvantApresVideos({ videos }: { videos: RealisationVideo[] }) {
 
   useEffect(() => {
     if (!selected) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setSelected(null);
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
   }, [selected]);
 
   if (videos.length === 0) return null;
@@ -99,30 +102,38 @@ export function AvantApresVideos({ videos }: { videos: RealisationVideo[] }) {
   const track = [...set, ...set];
 
   return (
-    <section className="py-20 md:py-28">
-      <h2 className="mx-auto max-w-6xl px-6 text-center text-3xl font-bold md:text-4xl">
-        Nos <span className="text-gradient">vidéos</span> avant / après
-      </h2>
+    <section className="overflow-hidden py-20 md:py-32">
+      <div className="mx-auto max-w-6xl px-6">
+        <SectionHeading
+          eyebrow="En vidéo"
+          titre="La transformation, en vrai."
+          accent={[2, 3]}
+          chapeau="Touchez une vidéo pour la voir en grand avec le son."
+        />
+      </div>
 
-      <div className="group relative mt-12 overflow-hidden motion-reduce:overflow-x-auto">
-        <div
-          className="flex w-max gap-6 px-3 animate-marquee group-hover:[animation-play-state:paused] motion-reduce:animate-none"
-          style={{ ['--marquee-duration' as string]: `${set.length * SECONDS_PER_CARD}s` }}
-        >
-          {track.map((video, i) => (
-            <VideoCard key={`${video.id}-${i}`} video={video} onOpen={() => setSelected(video)} />
-          ))}
+      {/* Mur de videos incline en perspective, qui defile en continu. */}
+      <div className="mt-16 [perspective:1400px]">
+        <div className="group relative -mx-10 [transform:rotateX(10deg)_rotateZ(-4deg)] motion-reduce:transform-none">
+          <div
+            className="flex w-max gap-5 py-6 animate-marquee group-hover:[animation-play-state:paused] motion-reduce:animate-none md:gap-7"
+            style={{ ['--marquee-duration' as string]: `${set.length * SECONDS_PER_CARD}s` }}
+          >
+            {track.map((video, i) => (
+              <VideoCard key={`${video.id}-${i}`} video={video} onOpen={() => setSelected(video)} />
+            ))}
+          </div>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-brand-bg to-transparent md:w-48" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-brand-bg to-transparent md:w-48" />
         </div>
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-brand-bg to-transparent md:w-24" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-brand-bg to-transparent md:w-24" />
       </div>
 
       {selected && (
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={selected.titre}
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
+          aria-label={selected.texte_alt || selected.titre}
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md"
           onClick={() => setSelected(null)}
         >
           <div className="flex max-h-full w-full max-w-sm flex-col" onClick={(e) => e.stopPropagation()}>
@@ -137,9 +148,8 @@ export function AvantApresVideos({ videos }: { videos: RealisationVideo[] }) {
               url={selected.video_url}
               title={selected.texte_alt || selected.titre}
               autoPlay
-              className="aspect-[9/16] max-h-[75dvh] w-full rounded-2xl bg-black"
+              className="aspect-[9/16] max-h-[80dvh] w-full rounded-[1.75rem] bg-black"
             />
-            <p className="mt-3 max-h-32 overflow-y-auto text-sm text-brand-cream/80">{selected.titre}</p>
           </div>
         </div>
       )}

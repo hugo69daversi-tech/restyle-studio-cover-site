@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Unbounded } from 'next/font/google';
 import './globals.css';
 import { getPublicContent } from '@/lib/content';
+import { SmoothScroll } from '@/components/motion/SmoothScroll';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const unbounded = Unbounded({ subsets: ['latin'], variable: '--font-display', weight: ['400', '600', '700'] });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.restylestudiocover.com';
 
@@ -57,8 +59,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   };
 
   return (
-    <html lang="fr" className={inter.variable}>
+    <html lang="fr" className={`${inter.variable} ${unbounded.variable}`}>
       <body className="font-sans antialiased">
+        <SmoothScroll />
+        <div aria-hidden className="grain" />
         {children}
         <script
           type="application/ld+json"

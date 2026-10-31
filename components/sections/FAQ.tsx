@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Icon } from '@/components/ui/Icon';
+import { AnimatePresence, motion } from 'motion/react';
+import { SectionHeading } from '@/components/ui/SectionHeading';
+import { Reveal } from '@/components/motion/Reveal';
 import type { FaqItem } from '@/lib/types';
 
 const DEFAULTS: FaqItem[] = [
@@ -37,28 +39,41 @@ export function FAQ({ items }: { items: FaqItem[] }) {
 
   return (
     <section className="section-container">
-      <h2 className="text-center text-3xl font-bold md:text-4xl">
-        Questions <span className="text-gradient">fréquentes</span>
-      </h2>
-      <div className="mx-auto mt-10 max-w-3xl space-y-3">
-        {faqItems.map((item) => {
+      <SectionHeading eyebrow="FAQ" titre="Vos questions, nos réponses." accent={[2, 3]} />
+      <div className="mx-auto mt-14 max-w-3xl divide-y divide-white/10 border-y border-white/10">
+        {faqItems.map((item, i) => {
           const isOpen = openId === item.id;
           return (
-            <div key={item.id} className="card">
+            <Reveal key={item.id} delay={i * 0.05}>
               <button
                 type="button"
-                className="flex w-full items-center justify-between text-left font-semibold"
+                className="flex w-full items-center justify-between gap-6 py-6 text-left font-display text-lg font-semibold transition-colors hover:text-brand-pink md:text-xl"
                 onClick={() => setOpenId(isOpen ? null : item.id)}
                 aria-expanded={isOpen}
               >
                 {item.question}
-                <Icon
-                  name="chevron"
-                  className={`h-5 w-5 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-                />
+                <span
+                  className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 text-xl transition-transform duration-300 ${
+                    isOpen ? 'rotate-45 border-brand-pink text-brand-pink' : ''
+                  }`}
+                >
+                  +
+                </span>
               </button>
-              {isOpen && <p className="mt-3 text-sm text-brand-cream/70">{item.reponse}</p>}
-            </div>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <p className="pb-6 pr-14 text-brand-cream/65">{item.reponse}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </Reveal>
           );
         })}
       </div>
