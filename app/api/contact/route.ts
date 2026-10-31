@@ -9,6 +9,7 @@ const schema = z.object({
   telephone: z.string().optional(),
   email: z.string().email().optional().or(z.literal('')),
   creneau: z.string().optional(),
+  projet: z.string().optional(),
   message: z.string().optional(),
   consentement: z.union([z.literal('on'), z.literal('true'), z.boolean()]),
 });
@@ -21,7 +22,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Formulaire invalide' }, { status: 400 });
   }
 
-  const { nom, adresse, telephone, email, creneau, message } = parsed.data;
+  const { nom, adresse, telephone, email, creneau, projet } = parsed.data;
+  // La table contacts n'a pas de colonne "projet" : on le garde en tete du message.
+  const message = [projet && `Projet : ${projet}`, parsed.data.message].filter(Boolean).join('\n') || undefined;
 
   if (!telephone && !email) {
     return NextResponse.json(

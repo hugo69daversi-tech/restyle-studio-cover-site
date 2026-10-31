@@ -4,7 +4,7 @@ import type { SiteSettings } from '@/lib/types';
 
 export function Footer({ settings }: { settings: SiteSettings | null }) {
   return (
-    <footer className="border-t border-white/10 py-10">
+    <footer className="border-t border-white/10 pb-28 pt-10 md:pb-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center text-sm text-brand-cream/60">
         <p>
           ReStyle Studio — {settings?.zone_intervention || 'Moselle & Luxembourg'} —{' '}
@@ -60,9 +60,6 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
           </Link>
           <Link href="/confidentialite" className="hover:text-brand-cream">
             Politique de confidentialité
-          </Link>
-          <Link href="/admin" className="hover:text-brand-cream">
-            Espace admin
           </Link>
         </div>
         <p>&copy; {new Date().getFullYear()} ReStyle Studio SARL. Tous droits réservés.</p>

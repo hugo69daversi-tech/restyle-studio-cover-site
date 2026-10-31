@@ -21,6 +21,20 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
+      keyframes: {
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-50%)' },
+        },
+        'step-in': {
+          from: { opacity: '0', transform: 'translateY(12px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee var(--marquee-duration, 40s) linear infinite',
+        'step-in': 'step-in 0.35s ease-out',
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

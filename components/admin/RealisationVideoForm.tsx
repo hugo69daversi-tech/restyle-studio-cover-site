@@ -82,6 +82,9 @@ export function RealisationVideoForm({ item }: { item?: RealisationVideo }) {
         <div>
           <label className="mb-1 block text-sm font-medium">Fichier vidéo (upload)</label>
           <input type="file" name="video" accept="video/*" className="w-full text-sm" />
+          <p className="mt-1 text-xs text-brand-cream/50">
+            Format vertical, 15-30 s, idéalement moins de 8 Mo : la vidéo se lance seule sur le site.
+          </p>
         </div>
         <div>
           <label className="mb-1 block text-sm font-medium">Ou lien YouTube / Vimeo</label>

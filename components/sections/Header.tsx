@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Logo } from '@/components/ui/Logo';
 import { Icon } from '@/components/ui/Icon';
+import { DEVIS_HREF } from '@/lib/devis';
 import type { SiteSettings } from '@/lib/types';
 
 export function Header({ settings }: { settings: SiteSettings | null }) {
@@ -28,10 +29,14 @@ export function Header({ settings }: { settings: SiteSettings | null }) {
           </Link>
           <a
             href={`tel:${phone.replace(/\s/g, '')}`}
-            className="hidden items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-brand-cream transition-colors hover:border-brand-pink/60 sm:flex"
+            aria-label={`Appeler le ${phone}`}
+            className="flex items-center gap-2 rounded-full border border-white/15 p-2.5 text-sm font-semibold text-brand-cream transition-colors hover:border-brand-pink/60 lg:px-4 lg:py-2"
           >
             <Icon name="phone" className="h-4 w-4" />
-            {phone}
+            <span className="hidden lg:inline">{phone}</span>
+          </a>
+          <a href={DEVIS_HREF} className="btn-primary hidden px-5 py-2 text-sm md:inline-flex">
+            Devis gratuit
           </a>
         </div>
       </div>

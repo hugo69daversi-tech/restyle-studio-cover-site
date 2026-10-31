@@ -3,10 +3,12 @@ import { getVideoEmbedInfo } from '@/lib/videoEmbed';
 export function VideoPlayer({
   url,
   title,
+  autoPlay = false,
   className = 'aspect-video w-full bg-black',
 }: {
   url: string;
   title: string;
+  autoPlay?: boolean;
   className?: string;
 }) {
   const embed = getVideoEmbedInfo(url);
@@ -14,7 +16,7 @@ export function VideoPlayer({
   if (embed) {
     return (
       <iframe
-        src={embed.embedUrl}
+        src={autoPlay ? `${embed.embedUrl}?autoplay=1&rel=0` : embed.embedUrl}
         title={title}
         className={className}
         loading="lazy"
@@ -24,5 +26,15 @@ export function VideoPlayer({
     );
   }
 
-  return <video src={url} controls preload="none" className={`${className} object-cover`} aria-label={title} />;
+  return (
+    <video
+      src={url}
+      controls
+      autoPlay={autoPlay}
+      playsInline
+      preload={autoPlay ? 'auto' : 'none'}
+      className={`${className} object-cover`}
+      aria-label={title}
+    />
+  );
 }

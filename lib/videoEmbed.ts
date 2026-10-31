@@ -44,3 +44,23 @@ export function getVideoEmbedInfo(url: string): VideoEmbedInfo | null {
 
   return null;
 }
+
+/**
+ * Variante muette, en boucle et sans controles, pour une lecture automatique
+ * en arriere-plan (carrousel des videos). YouTube exige `playlist=<id>` pour boucler.
+ */
+export function getAutoplayEmbedUrl(info: VideoEmbedInfo): string {
+  if (info.provider === 'vimeo') {
+    const url = new URL(info.embedUrl);
+    url.searchParams.set('background', '1');
+    return url.href;
+  }
+  const id = info.embedUrl.split('/embed/')[1];
+  return `${info.embedUrl}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&playsinline=1&rel=0&modestbranding=1`;
+}
+
+/** Miniature YouTube affichee avant le chargement du lecteur. */
+export function getEmbedThumbnail(info: VideoEmbedInfo): string | null {
+  if (info.provider !== 'youtube') return null;
+  return `https://i.ytimg.com/vi/${info.embedUrl.split('/embed/')[1]}/hqdefault.jpg`;
+}
